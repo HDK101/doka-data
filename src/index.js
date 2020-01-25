@@ -1,5 +1,31 @@
 const { app } = require("./config/config");
+const { readdir } = require("fs");
+const path = require("path");
+
+const currentDirectory = path.resolve(`${__dirname}/../`);
+
+console.log(process.argv);
 
 app.get("/", function(req, res) {
-  res.send("Hello world!");
+  readdir(currentDirectory, function(err, files) {
+    if (err) console.error(err);
+
+    let htmlFiles;
+
+    let index = 0;
+    const filesLength = files.length;
+
+    for (index = 0; index < filesLength; index++) {
+        htmlFiles += `${files[index]}<br>`;
+    }
+
+    res.send(htmlFiles);
+  });
+  //   res.send("Hello world!");
 });
+
+function hi() {
+    console.log("Hello there");
+}
+
+exports.hi = hi;
